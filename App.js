@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Dimensions } from 'react-native';
+import { StyleSheet, View, Dimensions, Platform } from 'react-native';
 import YoutubePlayer from 'react-native-youtube-iframe';
+import YouTube from 'react-youtube';
 
 const { width } = Dimensions.get('window');
 
@@ -14,8 +15,39 @@ export default function App() {
     }
   };
 
-  return (
-    <View style={styles.container}>
+  const onWebReady = (event) => {
+    event.target.playVideo();
+  };
+
+  const onWebStateChange = (event) => {
+    if (event.data === 0) { // ended
+      setPlaying(false);
+    }
+  };
+
+  const renderYouTubePlayer = () => {
+    if (Platform.OS === 'web') {
+      return (
+        <YouTube
+          videoId="h51ZMOJMw-E"
+          opts={{
+            height: width * 0.5625,
+            width: width,
+            playerVars: {
+              autoplay: 1,
+              controls: 1,
+              rel: 0,
+              showinfo: 0,
+              modestbranding: 1,
+            },
+          }}
+          onReady={onWebReady}
+          onStateChange={onWebStateChange}
+        />
+      );
+    }
+
+    return (
       <YoutubePlayer
         height={width * 0.5625}
         width={width}
@@ -31,6 +63,12 @@ export default function App() {
           modestbranding: 1,
         }}
       />
+    );
+  };
+
+  return (
+    <View style={styles.container}>
+      {renderYouTubePlayer()}
       <StatusBar style="auto" />
     </View>
   );
