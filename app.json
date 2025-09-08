@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "youtubeautoplay",
+    "slug": "youtubeautoplay",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "platforms": ["ios", "android"],
+    "jsEngine": "hermes"
+  }
+}

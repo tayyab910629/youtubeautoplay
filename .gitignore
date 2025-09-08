@@ -1,0 +1,7 @@
+node_modules/
+.expo/
+.expo-shared/
+
+# macOS and Windows
+.DS_Store
+Thumbs.db
