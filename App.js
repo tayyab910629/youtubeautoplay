@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Dimensions, Platform } from 'react-native';
-import YoutubePlayer from 'react-native-youtube-iframe';
+import { StyleSheet, View, Dimensions } from 'react-native';
 import YouTube from 'react-youtube';
 
 const { width } = Dimensions.get('window');
@@ -9,66 +8,34 @@ const { width } = Dimensions.get('window');
 export default function App() {
   const [playing, setPlaying] = useState(true);
 
-  const onStateChange = (state) => {
-    if (state === 'ended') {
-      setPlaying(false);
-    }
-  };
-
-  const onWebReady = (event) => {
+  const onReady = (event) => {
     event.target.playVideo();
   };
 
-  const onWebStateChange = (event) => {
+  const onStateChange = (event) => {
     if (event.data === 0) { // ended
       setPlaying(false);
     }
   };
 
-  const renderYouTubePlayer = () => {
-    if (Platform.OS === 'web') {
-      return (
-        <YouTube
-          videoId="h51ZMOJMw-E"
-          opts={{
-            height: width * 0.5625,
-            width: width,
-            playerVars: {
-              autoplay: 1,
-              controls: 1,
-              rel: 0,
-              showinfo: 0,
-              modestbranding: 1,
-            },
-          }}
-          onReady={onWebReady}
-          onStateChange={onWebStateChange}
-        />
-      );
-    }
-
-    return (
-      <YoutubePlayer
-        height={width * 0.5625}
-        width={width}
-        play={playing}
-        videoId="h51ZMOJMw-E"
-        onChangeState={onStateChange}
-        forceAndroidAutoplay={true}
-        initialPlayerParams={{
-          autoplay: 1,
-          controls: 1,
-          rel: 0,
-          showinfo: 0,
-          modestbranding: 1,
-        }}
-      />
-    );
-  };
-
   return (
     <View style={styles.container}>
-      {renderYouTubePlayer()}
+      <YouTube
+        videoId="h51ZMOJMw-E"
+        opts={{
+          height: width * 0.5625,
+          width: width,
+          playerVars: {
+            autoplay: 1,
+            controls: 1,
+            rel: 0,
+            showinfo: 0,
+            modestbranding: 1,
+          },
+        }}
+        onReady={onReady}
+        onStateChange={onStateChange}
+      />
       <StatusBar style="auto" />
     </View>
   );

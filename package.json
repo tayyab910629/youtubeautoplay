@@ -16,8 +16,6 @@
     "react-dom": "19.0.0",
     "react-native": "0.79.6",
     "react-native-web": "^0.20.0",
-    "react-native-webview": "13.13.5",
-    "react-native-youtube-iframe": "^2.4.1",
     "react-youtube": "^10.1.0"
   },
   "devDependencies": {
